@@ -1,7 +1,16 @@
 {
 	"name":"vue-translater",
-	"version":"0.0.1",
+	"version":"0.0.2",
+	"author": "Anas El ALAMI",
+	"repository": {
+	    "type": "git",
+	    "url": "https://github.com/khofaai/vue-translater"
+	},
 	"main":"src/translate.js",
 	"description":"vuejs package for text translating",
-	"keywords":["vue","vuejs","translate","multilangue","vue-translate","vue-translater"]
+	"keywords":["vue","vuejs","translate","multilangue","vue-translate","vue-translater"],
+	"license": "MIT",
+	"files": [
+	    "dist/*"
+	]
 }

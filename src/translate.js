@@ -9,20 +9,20 @@ export default function ( Vue, options ) {
 			selectedLang = lang;
 			localStorage.setItem(`${storageName}-lang`,lang);
 		},
-		getLang(lang) {
-			selectedLang = localStorage.getItem(`${storageName}-lang`,lang);
+		getLang() {
+			selectedLang = localStorage.getItem(`${storageName	}-lang`);
+			return selectedLang;
 		},
-		get(key,attributes){
+		get(key, attributes) {
 			let obj = localStorage.getItem(storageName);
 			if (obj !== null) {
 				obj = JSON.parse(obj);
 				if (typeof attributes !== 'undefined' && attributes.length > 0) {
-					attributes.forEach(attr => key = key.replace(':attr',attr));
+					attributes.forEach( attr => key = key.replace(':attr', attr) );
 					if (typeof obj[selectedLang][key] !== 'undefined') {
 						return obj[selectedLang][key];
 					}
 				} else {
-
 					if (typeof obj[selectedLang][key] !== 'undefined') {
 						return obj[selectedLang][key];
 					}
@@ -32,7 +32,6 @@ export default function ( Vue, options ) {
 		}
 	};
 	Vue.trans = translateObj;
-
 
 	Object.defineProperties(Vue.prototype, {
 		$trans: {
@@ -55,7 +54,7 @@ export default function ( Vue, options ) {
 	}
 
 	Vue.directive('trans', {
-		bind: (el,binding) => {
+		bind: (el, binding) => {
 			const params = binding.rawName.split('.'); 
 			let _get_value = (key) => translateObj.get(key);
 			if (params.length > 1) {
@@ -67,7 +66,7 @@ export default function ( Vue, options ) {
 						el.textContent = _get_value(attrs.text);
 					} else {
 						let to_replace = _get_value(attrs.text);
-						attrs.attributes.forEach(attr => to_replace = to_replace.replace(':attr',attr));
+						attrs.attributes.forEach( attr => to_replace = to_replace.replace(':attr', attr) );
 						el.textContent = to_replace;
 					}
 				} else if (params[1] == 'condition') {
