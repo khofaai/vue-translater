@@ -9,13 +9,84 @@ vuejs package helps you intergate translation with vuejs apps.
 ### Getting Started
 
 ```
-npm i kh-popover
+npm i vue-translater
 ```
 
 ### Usage
 
-direct access from vue instance
+Use `vue-translater` with your `vue` instance :
+```javascript
+import Vue from 'vue';
+import VueTranslater from 'vue-translater';
+
+let options = {
+  name: 'storageItemName',
+  translate: {
+    en: {
+      'hello': 'hello',
+      'developer': 'developer'
+    },
+    fr: {
+      'hello': 'bonjour',
+      'developer': 'développeur'
+    },
+    es: {
+      'hello': 'hola',
+      'developer': 'desarrollador'
+    }
+  }
+};
+
+Vue.use(VueTranslater, options /* optional */);
+```
+
+Direct access from vue instance
 ```
 this.$trans
 ```
-or by `v-trans` directive
+Or by `v-trans` directive.
+
+you can set your `json` object that contain all `key: value` translation :
+```javascript
+this.$trans.set(transObject)
+```
+`transObject` may be like : 
+```javascript
+{
+  langIsoCode1: {
+    keyword: "ValueLang1"
+  },
+  langIsoCode2: {
+    keyword: "ValueLang2"
+  }
+}
+```
+
+inside you vue component :
+```html
+<label v-trans.keyword></label>
+```
+or
+```html
+<label v-trans="'keyword'"></label>
+```
+these example will be converted to ( displayed value is based on active language )
+```
+<label>ValueLang1</label>
+```
+inside vue instance :
+```javascript
+this.$trans.get('keyword')
+```
+
+### languages
+
+To active a specific language :
+```javascript
+this.$trans.setLang(langIsoCode)
+```
+
+To get the active language :
+```javascript
+this.$trans.getLang()
+```
