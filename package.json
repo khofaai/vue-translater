@@ -1,0 +1,7 @@
+{
+	"name":"vue-translater",
+	"version":"0.0.1",
+	"main":"src/translate.js",
+	"description":"vuejs package for text translating",
+	"keywords":["vue","vuejs","translate","multilangue","vue-translate","vue-translater"]
+}
