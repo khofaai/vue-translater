@@ -1,20 +1,34 @@
 export default function ( Vue, options ) {
+	
 	let storageName = 'vtranslate';
 	let selectedLang = 'en';
+	let translationObject = null;
+
 	const translateObj = {
 		set(translate) {
+			translationObject = translate;
 			localStorage.setItem(storageName,JSON.stringify(translate));
 		},
 		setLang(lang) {
 			selectedLang = lang;
 			localStorage.setItem(`${storageName}-lang`,lang);
 		},
-		getLang() {
+		getCurrentLang() {
 			selectedLang = localStorage.getItem(`${storageName	}-lang`);
 			return selectedLang;
 		},
+		getAvailableLanguages() {
+			if (translationObject == null) {
+				this.getTranslationObject();
+			}
+			return Object.keys(translationObject);
+		},
+		getTranslationObject() {
+			translationObject = localStorage.getItem(storageName);
+			return translationObject;
+		},
 		get(key, attributes) {
-			let obj = localStorage.getItem(storageName);
+			let obj = this.getTranslationObject();
 			if (obj !== null) {
 				obj = JSON.parse(obj);
 				if (typeof attributes !== 'undefined' && attributes.length > 0) {
