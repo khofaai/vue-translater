@@ -41,7 +41,7 @@ Vue.use(VueTranslater, options /* optional */);
 ```
 
 Direct access from vue instance
-```
+```javascript
 this.$trans
 ```
 Or by `v-trans` directive.
@@ -62,13 +62,46 @@ this.$trans.set(transObject)
 }
 ```
 
-inside you vue component :
-```html
-<label v-trans.keyword></label>
-```
-or
+Inside you vue component :
+
 ```html
 <label v-trans="'keyword'"></label>
+<!-- Or -->
+<label v-trans.keyword></label>
+```
+
+For html tags attributes you can do it like :
+
+```html
+<!-- 
+  this use case takes an array with two elements, 
+  the first one take the string and the second take the arguments 
+-->
+<label v-trans.alt="[`my :attr account`, ['github']]"></label>
+<!-- 
+  for multiple slots in the same string 
+  you should set the values in second array in order with `:attr` in your string
+-->
+<label v-trans.alt="[`my :attr account has total of :attr packages`, ['github', 30]]"></label>
+<!-- and the sample use case is like -->
+<label :alt="$trans.get(`my :attr account`,['github'])"></label>
+```
+
+For multiple attributes in the same html tag you can do it like :
+
+```html
+<label  
+  v-trans.attributes="{
+    alt: { 
+      text: `my :attr account`, 
+      values: ['github'] 
+    },
+    title: { 
+      text: `my :attr title`, 
+      values: ['label'] 
+    }
+  }">
+</label>
 ```
 these example will be converted to ( displayed value is based on active language )
 ```
@@ -88,5 +121,10 @@ this.$trans.setLang(langIsoCode)
 
 To get the active language :
 ```javascript
-this.$trans.getLang()
+this.$trans.getCurrentLang()
+```
+
+To get all registred languages :
+```javascript
+this.$trans.getAvailableLanguages() // this will return all isoCode Languages set on translateObject
 ```
